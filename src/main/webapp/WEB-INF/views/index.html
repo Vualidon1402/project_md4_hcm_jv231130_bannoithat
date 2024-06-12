@@ -43,7 +43,18 @@
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                <li><a class="nav-link" href="/login-register"><img src="/images/user.svg"></a></li>
+               <li class="nav-link">
+                   <div class="dropdown">
+                       <img src="/images/user.svg" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                           <li><p class="dropdown-item">Hello: User</p></li>
+                           <li><a class="dropdown-item" href="/login">Login/Register</a></li>
+                           <li><a class="dropdown-item" href="/user-info">User Infomation</a></li>
+                           <li><a class="dropdown-item" href="#">Something else here</a></li>
+                       </ul>
+                   </div>
+               </li>
+<!--                <li><a class="nav-link" href="/login-register"><img src="/images/user.svg"></a></li>-->
                 <li><a class="nav-link" href="/cart"><img src="/images/cart.svg"></a></li>
             </ul>
         </div>

@@ -8,6 +8,7 @@ import ra.com.modules.users.dto.request.UsersRequest;
 import ra.com.modules.users.dto.response.UsersResponse;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,24 +31,25 @@ public class UsersService implements IUsersService{
     }
 
     @Override
-    public void save(UsersRequest users) {
+    public void save(UsersRequest request) {
         Users user = new Users();
-        if (users.getId() != null){
-            user = usersDao.findById(users.getId());
-        }else {
+        if (request.getId() != null){
+            user = usersDao.findById(request.getId());
+        } else {
+            user.setCreatedDate(new Date(System.currentTimeMillis()));
             user.setUserRole(Users.userRole.MEMBER);
             user.setUserStatus(Users.userStatus.ACTIVE);
         }
-        user.setUserName(users.getUserName());
-        user.setUserPassword(users.getUserPassword());
-        user.setUserEmail(users.getUserEmail());
-        user.setUserAddress(users.getUserAddress());
-        user.setUserGender(users.getUserGender());
-        user.setUserPhone(users.getUserPhone());
-        user.setCreatedDate(users.getCreatedDate());
-        usersDao.save(user);
+        user.setUserName(request.getUserName());
+        user.setUserPassword(request.getUserPassword());
+        user.setUserAddress(request.getUserAddress());
+        user.setUserEmail(request.getUserEmail());
+        user.setUserPhone(request.getUserPhone());
+        user.setUserGender(request.getUserGender());
 
+        usersDao.save(user);
     }
+
 
     @Override
     public void deleteById(Integer id) {

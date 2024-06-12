@@ -3,11 +3,17 @@ package ra.com.modules.users.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ra.com.modules.users.Users;
 import ra.com.modules.users.dto.request.UsersRequest;
+import ra.com.modules.users.dto.response.UsersResponse;
 import ra.com.modules.users.service.IUsersService;
 
+import javax.validation.Valid;
+import javax.validation.ValidatorFactory;
+import javax.xml.validation.Validator;
 import java.sql.Date;
 
 @Controller
@@ -70,46 +76,51 @@ public class UserController {
         return "order-history";
     }
 
-    @GetMapping("/login-register")
-    public String loginForm() {
-        return "/login-register/login-register";
+    @GetMapping("/register")
+    public String loginForm(Model model) {
+        model.addAttribute("users", new UsersRequest());
+        return "/login-register/register";
     }
 
-    @PostMapping("/register")
-    public String register(
-            @RequestParam("register-username") String username,
-            @RequestParam("register-email") String email,
-            @RequestParam("register-password") String password,
-            @RequestParam("phone") String phone,
-            @RequestParam("address") String address,
-            @RequestParam("gender") String genderString // Thay đổi kiểu dữ liệu thành String
-    ) {
-        Users.userGender gender = Users.userGender.valueOf(genderString); // Chuyển đổi chuỗi thành enum
-
-        Users user = Users.builder()
-                .userName(username)
-                .userEmail(email)
-                .userPassword(password)
-                .userPhone(phone)
-                .userAddress(address)
-                .userGender(gender) // Sử dụng đối tượng enum
-                .build();
-
-        user.setUserRole(Users.userRole.MEMBER);
-        user.setUserStatus(Users.userStatus.ACTIVE);
-
-        UsersRequest usersRequest = new UsersRequest();
-        usersRequest.setUserName(user.getUserName());
-        usersRequest.setUserPassword(user.getUserPassword());
-        usersRequest.setUserRole(user.getUserRole());
-        usersRequest.setUserStatus(user.getUserStatus());
-        usersRequest.setUserEmail(user.getUserEmail());
-        usersRequest.setUserAddress(user.getUserAddress());
-        usersRequest.setUserGender(user.getUserGender());
-        usersRequest.setUserPhone(user.getUserPhone());
-        usersRequest.setCreatedDate(new Date(System.currentTimeMillis()));
-
-        usersService.save(usersRequest);
-        return "redirect:/login-register";
+    @PostMapping("/registerForm")
+    public String register(@Valid @ModelAttribute("users") UsersRequest request, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("users", request);
+            return "login-register/register";
+        }
+        // Log thông báo
+        System.out.println("Đã đăng ký thành công!");
+        usersService.save(request);
+        System.out.println("Đã lưu thông tin người dùng!");
+        return "redirect:/login";
     }
+
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("userLogin", new UsersResponse());
+        return "login-register/login";
+    }
+
+    @PostMapping("/loginForm")
+    public String loginForm(@RequestParam("userName") String userName, @RequestParam("userPassword") String userPassword, Model model) {
+        // Kiểm tra userName và userPassword
+        Users user = usersService.findByUserName(userName);
+        if (user != null && user.getUserPassword().equals(userPassword)) {
+            // Log thông báo
+            System.out.println("Đã đăng nhập thành công!");
+
+            // Kiểm tra userRole và chuyển hướng tương ứng
+            if (user.getUserRole() == Users.userRole.MEMBER) {
+                return "redirect:/";
+            } else if (user.getUserRole() == Users.userRole.ADMIN) {
+                return "redirect:/admin";
+            }
+        }
+
+        // Nếu không tìm thấy người dùng hoặc mật khẩu không khớp, quay lại trang đăng nhập
+        System.out.println("Đăng nhập thất bại!");
+        model.addAttribute("users", new UsersResponse());
+        return "login-register/login";
+    }
+
 }
