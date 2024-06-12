@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class ProductServiceImpl implements IProductService{
-    private static final String uploadFolder = "C:\\Users\\ADMIN\\Desktop\\project_md4_hcm_jv231130_bannoithat\\src\\main\\webapp\\uploads\\";
+    private static final String uploadFolder = "C:\\Users\\dinht\\IdeaProjects\\project_md4_hcm_jv231130_bannoithat\\src\\main\\webapp\\uploads\\";
     @Autowired
     private IProductDao productDao;
     @Autowired

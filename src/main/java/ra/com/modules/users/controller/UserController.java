@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ra.com.modules.products.service.IProductService;
 import ra.com.modules.users.Users;
 import ra.com.modules.users.dto.request.UsersRequest;
 import ra.com.modules.users.dto.response.UsersResponse;
@@ -21,8 +22,11 @@ import java.sql.Date;
 public class UserController {
     @Autowired
     private IUsersService usersService;
+    @Autowired
+    private IProductService productService;
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("userProduct", productService.findAll());
         return "index";
     }
 
@@ -52,7 +56,8 @@ public class UserController {
     }
 
     @GetMapping("/shop")
-    public String team() {
+    public String team(Model model) {
+        model.addAttribute("userProduct", productService.findAll());
         return "shop";
     }
 
@@ -122,5 +127,7 @@ public class UserController {
         model.addAttribute("users", new UsersResponse());
         return "login-register/login";
     }
+
+
 
 }
