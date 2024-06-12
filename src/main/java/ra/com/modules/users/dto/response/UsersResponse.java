@@ -26,39 +26,37 @@ public class UsersResponse {
         Female
     }
 
-    public enum userStatus{
-        ACTIVE,
-        INACTIVE
-    }
 
     private Integer id;
 
-
+    @NotEmpty
+    @Size(max = 50)
     private String userName;
 
-
+    @NotEmpty
+    @Size(min = 6, max = 20)
     private String userPassword;
 
-
+    @NotNull
     private Users.userRole userRole;
 
-
+    @Pattern(regexp = "^\\d{10}$")
     private String userPhone;
 
-
+    @NotEmpty
     private String userAddress;
 
-
+    @NotEmpty
+    @Email
     private String userEmail;
 
-
+    @NotNull
     private Users.userGender userGender;
 
 
-    private Users.userStatus userStatus;
 
-    private Date createdDate;
-    private Date updatedDate;
+
+
 
 
     public UsersResponse(Users users){
@@ -70,9 +68,7 @@ public class UsersResponse {
         this.userAddress = users.getUserAddress();
         this.userEmail = users.getUserEmail();
         this.userGender = users.getUserGender();
-        this.userStatus = users.getUserStatus();
-        this.createdDate = users.getCreatedDate();
-        this.updatedDate = users.getUpdatedDate();
+
     }
 
 }

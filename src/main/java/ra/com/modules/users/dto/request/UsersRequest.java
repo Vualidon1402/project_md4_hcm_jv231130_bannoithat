@@ -6,6 +6,7 @@ import ra.com.modules.users.Users;
 import javax.persistence.*;
 import java.util.Date;
 import javax.validation.constraints.*;
+import javax.persistence.Temporal;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,50 +15,45 @@ import javax.validation.constraints.*;
 @Builder
 
 public class UsersRequest {
-    public enum userRole {
-        ADMIN,
-        USER
-    }
+
 
     public enum userGender{
         Male,
         Female
     }
 
-    public enum userStatus{
-        ACTIVE,
-        INACTIVE
-    }
 
 
     private Integer id;
 
-
+    @NotEmpty
+    @Size(max = 50)
     private String userName;
 
-
+    @NotEmpty
+    @Size(min = 6, max = 20)
     private String userPassword;
 
 
-    private Users.userRole userRole;
 
-
+    @Pattern(regexp = "^\\d{10}$")
     private String userPhone;
 
-
+    @NotEmpty
     private String userAddress;
 
-
+    @NotEmpty
+    @Email
     private String userEmail;
 
-
+    @NotNull
     private Users.userGender userGender;
 
 
-    private Users.userStatus userStatus;
 
-    private Date createdDate;
-    private Date updatedDate;
+
+
+
 
 
 
