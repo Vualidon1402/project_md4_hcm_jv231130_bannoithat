@@ -13,7 +13,6 @@
     <div class="modal-content">
         <div class="modal-header">
             <h1 class="modal-title fs-5" >Edit Product</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <input type="hidden" th:field="*{id}" readonly>
@@ -23,7 +22,7 @@
             </div>
             <div class="mb-3">
                 <label  class="form-label">Product Image</label>
-                <input type="file" class="form-control" th:field="*{file}"><br>
+                <input type="file" class="form-control" th:field="*{image}"><br>
                 <img id="previewUp" src="" alt="" width="100" height="100" style=" object-fit: cover" />
             </div>
             <div class="mb-3">

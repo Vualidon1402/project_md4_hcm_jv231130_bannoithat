@@ -10,7 +10,6 @@ import ra.com.modules.products.dto.response.ProductResponse;
 import ra.com.modules.products.service.IProductService;
 import ra.com.modules.products.validator.ProductValidator;
 
-
 import javax.validation.Valid;
 
 @Controller
@@ -31,13 +30,9 @@ public class AdminController {
         return "admin/category";
     }
 
-
     @GetMapping("/receipt")
-    public String receipt() {
-        System.out.println("receipt");
-        return "admin/receipt"; }
-
-
+    public String receipt() { return "admin/receipt";
+    }
 
     @GetMapping("/product")  // prooduct list
     public String product(@RequestParam(value = "page",defaultValue = "0") Integer page,@RequestParam(value = "limit",defaultValue = "3") Integer limit,Model model) {
@@ -46,7 +41,7 @@ public class AdminController {
         // sô luong sp trên trang
         // trang hiện tại (tính từ 0)
         long totalElements = productService.getTotalsElement();
-        System.out.println("totalElements: "+totalElements);
+
         long nguyen = totalElements/limit;
         long du = totalElements%limit;
         long totalPages = du==0?nguyen:nguyen+1;
@@ -80,18 +75,9 @@ public class AdminController {
         return "redirect:/admin/product"; //điều hướng theo đường dẫn
     }
     @PostMapping("/product/update")
-    public String doUpdate(@ModelAttribute("product") ProductRequest request, BindingResult result, Model model){
-        if (result.hasErrors()){
-            model.addAttribute("product", request);
-            return "admin/product/product-edit";
-        }
-        try {
-            productService.save(request);
-        } catch (Exception e) {
-            model.addAttribute("error", "An error occurred while updating the product.");
-            return "admin/product/product-edit";
-        }
-        return "redirect:/admin/product";
+    public  String doUpdate(@ModelAttribute("product") ProductRequest request){
+        productService.save(request);
+        return "redirect:/admin/product"; //điều hướng theo đường dẫn
     }
     @GetMapping("/product/delete")
     public String doDelete(@RequestParam("id") Integer idDel){
@@ -107,9 +93,10 @@ public class AdminController {
     }
 
     @GetMapping("/product/edit/{id}")
-    @ResponseBody
-    public ProductResponse edit(@PathVariable Integer id){
-        return productService.findById(id);
+    public String edit(@PathVariable Integer id, Model model){
+        ProductResponse productResponse = productService.findById(id);
+        model.addAttribute("product", productResponse);
+        return "admin/product/product-edit";
     }
 
 }
