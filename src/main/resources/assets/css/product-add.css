@@ -1,0 +1,62 @@
+/* Style for the page title */
+h1 {
+    text-align: center;
+    color: #333;
+    padding: 20px 0;
+}
+
+/* Style for the form */
+form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+/* Style for the form labels */
+form .form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Style for the form inputs */
+form .form-control {
+    margin-bottom: 20px;
+}
+
+/* Style for the error messages */
+form .text-danger {
+    color: red;
+}
+
+/* Style for the modal content */
+.modal-content {
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the modal header */
+.modal-header {
+    margin-bottom: 20px;
+}
+
+/* Style for the modal title */
+.modal-title {
+    font-size: 1.25rem;
+    color: #007bff;
+}
+
+/* Style for the modal footer */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Style for the buttons */
+.btn {
+    margin-left: 10px;
+}
