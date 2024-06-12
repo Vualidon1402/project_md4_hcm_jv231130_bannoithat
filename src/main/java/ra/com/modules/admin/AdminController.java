@@ -9,6 +9,8 @@ import ra.com.modules.products.dto.request.ProductRequest;
 import ra.com.modules.products.dto.response.ProductResponse;
 import ra.com.modules.products.service.IProductService;
 import ra.com.modules.products.validator.ProductValidator;
+import ra.com.modules.users.dto.request.UsersRequest;
+import ra.com.modules.users.service.IUsersService;
 
 import javax.validation.Valid;
 
@@ -19,6 +21,9 @@ public class AdminController {
     private ProductValidator validator;
     @Autowired
     private IProductService productService;
+
+    @Autowired
+    private IUsersService usersService;
 
     @GetMapping
     public String admin() {
@@ -53,8 +58,9 @@ public class AdminController {
         model.addAttribute("product",new ProductRequest());
         return "admin/product/product"; // tên view
     }
-    @GetMapping("/user")
-    public String user() {
+    @GetMapping("user")
+    public String user(Model model){
+        model.addAttribute("adminUser",usersService.findAll());
         return "admin/user";
     }
 
