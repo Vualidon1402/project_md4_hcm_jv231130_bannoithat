@@ -26,6 +26,11 @@ public class UsersResponse {
         Female
     }
 
+    public enum userStatus{
+        ACTIVE,
+        INACTIVE
+    }
+
 
     private Integer id;
 
@@ -50,10 +55,16 @@ public class UsersResponse {
     @Email
     private String userEmail;
 
-    @NotNull
     private Users.userGender userGender;
 
+    private Users.userStatus userStatus;
 
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
 
 
 
@@ -68,6 +79,8 @@ public class UsersResponse {
         this.userAddress = users.getUserAddress();
         this.userEmail = users.getUserEmail();
         this.userGender = users.getUserGender();
+        this.userStatus = users.getUserStatus();
+        this.createdDate = users.getCreatedDate();
 
     }
 
