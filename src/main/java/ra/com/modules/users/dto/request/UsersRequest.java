@@ -19,12 +19,12 @@ public class UsersRequest {
         USER
     }
 
-    public enum userGender{
+    public enum userGender {
         Male,
         Female
     }
 
-    public enum userStatus{
+    public enum userStatus {
         ACTIVE,
         INACTIVE
     }
@@ -58,7 +58,6 @@ public class UsersRequest {
 
     private Date createdDate;
     private Date updatedDate;
-
 
 
 }

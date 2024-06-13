@@ -17,6 +17,7 @@ import java.util.List;
 public class ProductDaoImpl implements IProductDao {
     @Autowired
     private SessionFactory sessionFactory;
+
     @Override
     public List<Product> findAll() {
         // mở 1 session hoặc lấy ra session hiện tại
@@ -40,7 +41,7 @@ public class ProductDaoImpl implements IProductDao {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Product where isDeleted = false", Product.class)
                 .setMaxResults(size)
-                .setFirstResult(page*size)
+                .setFirstResult(page * size)
                 .list();
     }
 
@@ -48,21 +49,21 @@ public class ProductDaoImpl implements IProductDao {
     public List<Product> searchByName(String keyword) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Product p where p.isDeleted = false and p.name like concat('%',:key,'%')", Product.class)
-                .setParameter("key",keyword)
+                .setParameter("key", keyword)
                 .list();
     }
 
     @Override
     public Product findById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Product.class,id);
+        return session.get(Product.class, id);
     }
 
     @Override
     public boolean existByName(String name) {
         Session session = sessionFactory.getCurrentSession();
         return !session.createQuery("from Product where name like :name")
-                .setParameter("name",name).list().isEmpty();
+                .setParameter("name", name).list().isEmpty();
     }
 
     @Override
@@ -74,14 +75,14 @@ public class ProductDaoImpl implements IProductDao {
     @Override
     public void deleteById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        Product product = session.get(Product.class,id);
+        Product product = session.get(Product.class, id);
         session.delete(product);
     }
 
     @Override
     public long getTotalsElement() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("select count(P) from Product P where isDeleted = false ",Long.class)
+        return session.createQuery("select count(P) from Product P where isDeleted = false ", Long.class)
                 .getSingleResult();
     }
 }

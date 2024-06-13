@@ -13,9 +13,10 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UsersService implements IUsersService{
+public class UsersService implements IUsersService {
     @Autowired
     private IUsersDao usersDao;
+
     @Override
     public List<UsersResponse> findAll() {
         List<Users> users = usersDao.findAll();
@@ -32,9 +33,9 @@ public class UsersService implements IUsersService{
     @Override
     public void save(UsersRequest users) {
         Users user = new Users();
-        if (users.getId() != null){
+        if (users.getId() != null) {
             user = usersDao.findById(users.getId());
-        }else {
+        } else {
             user.setUserRole(Users.userRole.MEMBER);
             user.setUserStatus(Users.userStatus.ACTIVE);
         }

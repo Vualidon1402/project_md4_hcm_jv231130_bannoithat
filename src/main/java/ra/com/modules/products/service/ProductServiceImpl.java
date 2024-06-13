@@ -18,12 +18,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ProductServiceImpl implements IProductService{
+public class ProductServiceImpl implements IProductService {
     private static final String uploadFolder = "C:\\Users\\ADMIN\\Desktop\\project_md4_hcm_jv231130_bannoithat\\src\\main\\webapp\\uploads\\";
     @Autowired
     private IProductDao productDao;
     @Autowired
     private ServletContext servletContext;
+
     @Override
     public List<ProductResponse> findAll() {
         List<Product> list = productDao.findAll();
@@ -32,7 +33,7 @@ public class ProductServiceImpl implements IProductService{
 
     @Override
     public List<Product> findByPagination(Integer page, Integer limit) {
-        return productDao.findByPagination(page,limit);
+        return productDao.findByPagination(page, limit);
     }
 
     @Override
@@ -59,34 +60,35 @@ public class ProductServiceImpl implements IProductService{
     public void save(ProductRequest request) {
         // chuyển đổi
         Product product = new Product();
-         if (request.getId() != null){
-             // neu laf chuc nang cap nhap
-             product= productDao.findById(request.getId());
-         }else {
+        if (request.getId() != null) {
+            // neu laf chuc nang cap nhap
+            product = productDao.findById(request.getId());
+        } else {
             product.setCreatedAt(new Date());
             product.setIsDeleted(false);
-         }
-         product.setName(request.getName());
-         product.setDescription(request.getDescription());
-         product.setPrice(request.getPrice());
-         product.setStock(request.getStock());
+        }
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setStock(request.getStock());
 
         // upload mới
-        if (request.getFile()!=null && request.getFile().getSize()!=0){
+        if (request.getFile() != null && request.getFile().getSize() != 0) {
             String uploadPath = servletContext.getRealPath("/uploads");
             File folder = new File(uploadPath);
-            if (!folder.exists()){
+            if (!folder.exists()) {
                 folder.mkdirs();
             }
             String fileName = request.getFile().getOriginalFilename();
             try {
-                FileCopyUtils.copy(request.getFile().getBytes(),new File(uploadPath+File.separator+fileName));
-                FileCopyUtils.copy(request.getFile().getBytes(),new File(uploadFolder+fileName));
-                product.setImage("/uploads/"+fileName);
+                FileCopyUtils.copy(request.getFile().getBytes(), new File(uploadPath + File.separator + fileName));
+                FileCopyUtils.copy(request.getFile().getBytes(), new File(uploadFolder + fileName));
+                product.setImage("/uploads/" + fileName);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        };
+        }
+        ;
         productDao.save(product);
     }
 

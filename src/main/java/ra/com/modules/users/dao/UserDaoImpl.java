@@ -12,6 +12,7 @@ import java.util.List;
 public class UserDaoImpl implements IUsersDao {
     @Autowired
     private SessionFactory sessionFactory;
+
     @Override
     public List<Users> findAll() {
         Session session = sessionFactory.getCurrentSession();
