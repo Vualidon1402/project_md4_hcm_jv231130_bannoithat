@@ -21,6 +21,7 @@ import java.util.List;
 // n - n -> 1 - n - Trung gian - n -1
 
 
+
 @Table(name = "Product")
 @Entity // đây là 1 thực thể ánh xạ
 public class Product {
@@ -31,7 +32,7 @@ public class Product {
     private String name;
     private Double price;
     private String description;
-    private String image;
+    private String image ;
     private Integer stock;
     @Column(name = "created_at")
     private Date createdAt;
