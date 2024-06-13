@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ra.com.modules.products.dto.response.ProductResponse;
 import ra.com.modules.products.service.IProductService;
 import ra.com.modules.users.Users;
 import ra.com.modules.users.dto.request.UsersRequest;
@@ -61,6 +62,13 @@ public class UserController {
     public String team(Model model) {
         model.addAttribute("userProduct", productService.findAll());
         return "shop";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String shopDetail(@PathVariable("id") Integer id, Model model) {
+        ProductResponse product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "/product-detail"; // Tên của view (template HTML)
     }
 
     @GetMapping("/thank-you")
