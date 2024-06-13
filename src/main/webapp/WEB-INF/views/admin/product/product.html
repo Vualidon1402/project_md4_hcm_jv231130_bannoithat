@@ -21,7 +21,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -125,7 +127,8 @@
                                 <a href="#" class="list-group-item">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="/images/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle"
+                                            <img src="/images/avatars/avatar-5.jpg"
+                                                 class="avatar img-fluid rounded-circle"
                                                  alt="Vanessa Tucker">
                                         </div>
                                         <div class="col-10 ps-2">
@@ -140,7 +143,8 @@
                                 <a href="#" class="list-group-item">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="images/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle"
+                                            <img src="images/avatars/avatar-2.jpg"
+                                                 class="avatar img-fluid rounded-circle"
                                                  alt="William Harris">
                                         </div>
                                         <div class="col-10 ps-2">
@@ -154,7 +158,8 @@
                                 <a href="#" class="list-group-item">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="/images/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle"
+                                            <img src="/images/avatars/avatar-4.jpg"
+                                                 class="avatar img-fluid rounded-circle"
                                                  alt="Christina Mason">
                                         </div>
                                         <div class="col-10 ps-2">
@@ -167,7 +172,8 @@
                                 <a href="#" class="list-group-item">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-2">
-                                            <img src="/images/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle"
+                                            <img src="/images/avatars/avatar-3.jpg"
+                                                 class="avatar img-fluid rounded-circle"
                                                  alt="Sharon Lessman">
                                         </div>
                                         <div class="col-10 ps-2">
@@ -191,7 +197,8 @@
                         </a>
 
                         <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                            <img src="/images/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall"/>
+                            <img src="/images/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"
+                                 alt="Charles Hall"/>
                             <span class="text-dark">Kiên-Anh</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
@@ -217,11 +224,11 @@
             <div class="container-fluid p-0">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Demo Product Table</h3>
+                        <h3 class="card-title">Product Table</h3>
                         <nav class="navbar navbar-expand-lg bg-light">
                             <div class="container-fluid">
                                 <a class="navbar-brand" href="/admin/product/add">
-                                    <button type="button" class="btn btn-success" >Add new Product</button>
+                                    <button type="button" class="btn btn-success">Add new Product</button>
                                 </a>
                                 <form class="d-flex" role="search" action="/admin/product/search">
                                     <input class="form-control me-2 fst-italic" type="search"
@@ -250,13 +257,16 @@
                             <tr th:each="pro:${products}">
                                 <td th:text="${pro.id}"></td>
                                 <td th:text="${pro.name}"></td>
-                                <td><img th:src="${pro.image}" alt="" width="100" height="100" style=" object-fit: cover"></td>
+                                <td><img th:src="${pro.image}" alt="" width="100" height="100"
+                                         style=" object-fit: cover"></td>
                                 <td th:text="${pro.price}"></td>
                                 <td th:text="${#dates.format(pro.createdAt,'dd/MM/yyyy')}"></td>
                                 <td><a th:href="|/admin/product/edit/${pro.id}|" class="btn btn-warning">Edit</a></td>
-                                <td><a th:href="|/admin/product/delete/${pro.id}|" onclick="return confirm('Bạn có chắc  chắn muốn xóa ko ?')" class="btn btn-danger">Delete</a></td>
+                                <td><a th:href="|/admin/product/delete/${pro.id}|"
+                                       onclick="return confirm('Bạn có chắc  chắn muốn xóa ko ?')"
+                                       class="btn btn-danger">Delete</a></td>
                             </tr>
-                            
+
                             </tbody>
 
                         </table>
@@ -267,7 +277,8 @@
                             <li th:class="|page-item ${page<=0?'disabled':''}|">
                                 <a class="page-link" th:href="|?page=${page+-1}&limit=${limit}|">Previous</a>
                             </li>
-                            <li th:each="p,loop:${#numbers.sequence(1,totalPages)}" th:class="|page-item ${page==loop.index?'active':''}|">
+                            <li th:each="p,loop:${#numbers.sequence(1,totalPages)}"
+                                th:class="|page-item ${page==loop.index?'active':''}|">
                                 <a class="page-link" th:href="|?page=${loop.index}&limit=${limit}|" th:text="${p}">1</a>
                             </li>
                             <li th:class="|page-item ${page+1>=totalPages?'disabled':''}|">
@@ -315,19 +326,20 @@
 <script src="/js/app.js"></script>
 
 <script>
-    let formEdit  = document.querySelector("#editModal");
-    let idEdit= formEdit.querySelector("#id");
-    let nameEdit= formEdit.querySelector("#name");
-    let imageEdit= formEdit.querySelector("#previewUp");
-    let priceEdit= formEdit.querySelector("#price");
-    let descriptionEdit= formEdit.querySelector("#description");
-    let stockEdit= formEdit.querySelector("#stock");
-        function handleEditProduct (id){
-        console.log("id",id)
+    let formEdit = document.querySelector("#editModal");
+    let idEdit = formEdit.querySelector("#id");
+    let nameEdit = formEdit.querySelector("#name");
+    let imageEdit = formEdit.querySelector("#previewUp");
+    let priceEdit = formEdit.querySelector("#price");
+    let descriptionEdit = formEdit.querySelector("#description");
+    let stockEdit = formEdit.querySelector("#stock");
+
+    function handleEditProduct(id) {
+        console.log("id", id)
         $.ajax({
-            url: "http://localhost:8080/admin/product/edit/"+id,
+            url: "http://localhost:8080/admin/product/edit/" + id,
             success: function (res) {
-                console.log("res",res)
+                console.log("res", res)
                 idEdit.value = res.id;
                 nameEdit.value = res.name;
                 imageEdit.src = res.image;

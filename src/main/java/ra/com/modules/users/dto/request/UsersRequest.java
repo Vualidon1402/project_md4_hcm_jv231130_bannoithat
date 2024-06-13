@@ -17,11 +17,18 @@ import javax.persistence.Temporal;
 public class UsersRequest {
 
 
-    public enum userGender{
+    public enum userGender {
         Male,
         Female
     }
 
+<<<<<<< HEAD
+=======
+    public enum userStatus {
+        ACTIVE,
+        INACTIVE
+    }
+>>>>>>> 600d85a (Hoan thien quan tri Category)
 
 
     private Integer id;
@@ -48,7 +55,6 @@ public class UsersRequest {
 
     @NotNull
     private Users.userGender userGender;
-
 
 
 

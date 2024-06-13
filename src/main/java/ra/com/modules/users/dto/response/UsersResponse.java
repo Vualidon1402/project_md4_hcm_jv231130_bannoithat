@@ -21,12 +21,12 @@ public class UsersResponse {
         USER
     }
 
-    public enum userGender{
+    public enum userGender {
         Male,
         Female
     }
 
-    public enum userStatus{
+    public enum userStatus {
         ACTIVE,
         INACTIVE
     }
@@ -67,10 +67,14 @@ public class UsersResponse {
     private Date updatedDate;
 
 
+<<<<<<< HEAD
 
 
 
     public UsersResponse(Users users){
+=======
+    public UsersResponse(Users users) {
+>>>>>>> 600d85a (Hoan thien quan tri Category)
         this.id = users.getId();
         this.userName = users.getUserName();
         this.userPassword = users.getUserPassword();

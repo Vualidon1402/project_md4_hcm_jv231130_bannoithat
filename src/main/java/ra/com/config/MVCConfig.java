@@ -21,6 +21,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 @ComponentScan(basePackages = "ra.com")// phát hện component :  @Component , @Controller, @Service, @Repository
 public class MVCConfig implements WebMvcConfigurer, ApplicationContextAware {
     private ApplicationContext applicationContext;
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
@@ -55,9 +56,10 @@ public class MVCConfig implements WebMvcConfigurer, ApplicationContextAware {
         viewResolver.setContentType("UTF-8");
         return viewResolver;
     }
+
     // cấu hình file upload
     @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver getResolver()  {
+    public CommonsMultipartResolver getResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setMaxUploadSizePerFile(52428800); // 50MB
         return resolver;
@@ -67,12 +69,11 @@ public class MVCConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/uploads/**","/css/**","/js/**","/images/**","/scss/**")
-                .addResourceLocations("/uploads/","classpath:assets/css/","classpath:assets/js/","classpath:assets/images/", "classpath:assets/scss/");
+        registry.addResourceHandler("/uploads/**", "/css/**", "/js/**", "/images/**", "/scss/**")
+                .addResourceLocations("/uploads/", "classpath:assets/css/", "classpath:assets/js/", "classpath:assets/images/", "classpath:assets/scss/");
     }
 
 //Interceptor
-
 
 
 }

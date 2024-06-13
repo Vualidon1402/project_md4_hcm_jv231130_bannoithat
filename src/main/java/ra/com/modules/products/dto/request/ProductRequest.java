@@ -19,12 +19,12 @@ public class ProductRequest {
 //    @NotEmpty // ko được để trống (null) ,phải có chứa phàn tử
 //    @NotBlank // kiểu chuỗi : ko null và ko đc ""
 
-//    @Pattern()  // so khớp theo regex
+    //    @Pattern()  // so khớp theo regex
 //    @Email // email
 //    @Size (min =  , max = ) // kích thước số phần tử của danh sách
 //    @Min() // giá trị nhor nhất
 //    @Max() // gia trị lớn nhất
-private Integer id;
+    private Integer id;
     @NotBlank(message = "Không được để trống")
 //    @Pattern(regexp = "^\\w{6,}$", message = "ít nhất 6 kí tự, ko đc có kí đặc biệt")
     @ProductNameUnique
@@ -34,7 +34,7 @@ private Integer id;
     private Double price;
     @NotBlank(message = "Không được để trống")
     private String description;
-//    @NotNull
+    //    @NotNull
     private MultipartFile file;
     @Min(value = 0, message = "không được nhỏ hơn 0")
     private Integer stock;

@@ -1,4 +1,4 @@
-package ra.com.modules.products.validator;
+package ra.com.modules.category.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(
-        validatedBy = ProductNameConstraint.class
+        validatedBy = CategoryNameConstraint.class
 )
-public @interface ProductNameUnique {
+public @interface CategoryNameUnique {
     // kiểu annotation / decorator
     String message() default "Ten da ton tai";
 
