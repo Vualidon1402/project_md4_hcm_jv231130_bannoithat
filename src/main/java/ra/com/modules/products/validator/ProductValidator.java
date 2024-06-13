@@ -12,7 +12,6 @@ import ra.com.modules.products.service.IProductService;
 public class ProductValidator implements Validator {
     @Autowired
     private IProductService productService;
-
     @Override
     public boolean supports(Class<?> clazz) {
         return ra.com.modules.products.dto.request.ProductRequest.class.equals(clazz);
@@ -21,8 +20,8 @@ public class ProductValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         ProductRequest p = (ProductRequest) target;
-        if (productService.existByName(p.getName())) {
-            errors.rejectValue("name", "ncjdhv", "tên da tồn tại !");
+        if (productService.existByName(p.getName())){
+            errors.rejectValue("name","ncjdhv","tên da tồn tại !");
         }
     }
 }

@@ -67,25 +67,24 @@ public class UsersResponse {
     private Date updatedDate;
 
 
-<<<<<<< HEAD
 
 
 
-    public UsersResponse(Users users){
-=======
+
+
+
     public UsersResponse(Users users) {
->>>>>>> 600d85a (Hoan thien quan tri Category)
-        this.id = users.getId();
-        this.userName = users.getUserName();
-        this.userPassword = users.getUserPassword();
-        this.userRole = users.getUserRole();
-        this.userPhone = users.getUserPhone();
-        this.userAddress = users.getUserAddress();
-        this.userEmail = users.getUserEmail();
-        this.userGender = users.getUserGender();
-        this.userStatus = users.getUserStatus();
-        this.createdDate = users.getCreatedDate();
 
+            this.id = users.getId();
+            this.userName = users.getUserName();
+            this.userPassword = users.getUserPassword();
+            this.userRole = users.getUserRole();
+            this.userPhone = users.getUserPhone();
+            this.userAddress = users.getUserAddress();
+            this.userEmail = users.getUserEmail();
+            this.userGender = users.getUserGender();
+            this.userStatus = users.getUserStatus();
+            this.createdDate = users.getCreatedDate();
+
+        }
     }
-
-}

@@ -22,13 +22,12 @@ public class UsersRequest {
         Female
     }
 
-<<<<<<< HEAD
-=======
+
     public enum userStatus {
         ACTIVE,
         INACTIVE
     }
->>>>>>> 600d85a (Hoan thien quan tri Category)
+
 
 
     private Integer id;

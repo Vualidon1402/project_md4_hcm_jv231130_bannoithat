@@ -14,10 +14,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UsersService implements IUsersService {
+public class UsersService implements IUsersService{
     @Autowired
     private IUsersDao usersDao;
-
     @Override
     public List<UsersResponse> findAll() {
         List<Users> users = usersDao.findAll();
@@ -34,16 +33,10 @@ public class UsersService implements IUsersService {
     @Override
     public void save(UsersRequest request) {
         Users user = new Users();
-<<<<<<< HEAD
         if (request.getId() != null){
             user = usersDao.findById(request.getId());
         } else {
             user.setCreatedDate(new Date(System.currentTimeMillis()));
-=======
-        if (users.getId() != null) {
-            user = usersDao.findById(users.getId());
-        } else {
->>>>>>> 600d85a (Hoan thien quan tri Category)
             user.setUserRole(Users.userRole.MEMBER);
             user.setUserStatus(Users.userStatus.ACTIVE);
         }
