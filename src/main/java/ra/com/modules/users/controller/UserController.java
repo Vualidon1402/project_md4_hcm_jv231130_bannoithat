@@ -22,12 +22,10 @@ import java.sql.Date;
 public class UserController {
     @Autowired
     private IUsersService usersService;
-<<<<<<< HEAD
+
     @Autowired
     private IProductService productService;
-=======
 
->>>>>>> 600d85a (Hoan thien quan tri Category)
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("userProduct", productService.findAll());
