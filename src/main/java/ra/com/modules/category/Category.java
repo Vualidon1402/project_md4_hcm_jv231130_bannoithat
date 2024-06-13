@@ -4,6 +4,7 @@ package ra.com.modules.category;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,6 +19,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String image;
+    private Date createdAt;
     private Boolean isDeleted;
 //    @OneToMany(mappedBy = "category") // bn nghịch đao
 //    private List<Product> products;

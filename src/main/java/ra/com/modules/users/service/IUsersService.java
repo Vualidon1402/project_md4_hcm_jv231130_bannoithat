@@ -8,8 +8,12 @@ import java.util.List;
 
 public interface IUsersService {
     List<UsersResponse> findAll();
+
     Users findById(Integer id);
+
     void save(UsersRequest users);
+
     void deleteById(Integer id);
+
     Users findByUserName(String userName);
 }

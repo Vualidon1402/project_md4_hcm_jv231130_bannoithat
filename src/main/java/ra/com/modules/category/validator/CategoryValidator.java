@@ -1,27 +1,29 @@
-package ra.com.modules.products.validator;
+package ra.com.modules.category.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ra.com.modules.category.dto.request.CategoryRequest;
+import ra.com.modules.category.service.ICategoryService;
 import ra.com.modules.products.dto.request.ProductRequest;
 import ra.com.modules.products.service.IProductService;
 
 
 @Component
-public class ProductValidator implements Validator {
+public class CategoryValidator implements Validator {
     @Autowired
-    private IProductService productService;
+    private ICategoryService categoryService;
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return ra.com.modules.products.dto.request.ProductRequest.class.equals(clazz);
+        return CategoryRequest.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         ProductRequest p = (ProductRequest) target;
-        if (productService.existByName(p.getName())) {
+        if (categoryService.existByName(p.getName())) {
             errors.rejectValue("name", "ncjdhv", "tên da tồn tại !");
         }
     }

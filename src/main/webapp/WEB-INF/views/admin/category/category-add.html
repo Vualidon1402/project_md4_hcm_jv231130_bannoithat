@@ -9,40 +9,24 @@
     <link rel="stylesheet" href="/css/product-add.css">
 </head>
 <body>
-<form action="/admin/product/add" method="post" enctype="multipart/form-data" th:object="${product}">
+<form action="/admin/category/add" method="post" enctype="multipart/form-data" th:object="${category}">
     <div class="modal-content">
         <div class="modal-header">
-            <h1 class="modal-title fs-5">Add New Product</h1>
+            <h1 class="modal-title fs-5">Add New Category</h1>
             <br>
         </div>
         <div class="modal-body">
             <div class="mb-3">
-                <label class="form-label">Product Name</label>
+                <label class="form-label">Category Name</label>
                 <input type="text" class="form-control" th:field="*{name}">
                 <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
             </div>
             <div class="mb-3">
-                <label class="form-label">Product Image</label>
+                <label class="form-label">Category Image</label>
                 <input type="file" class="form-control" th:field="*{file}">
                 <div id="preview"></div>
                 <p class="text-danger" th:if="${#fields.hasErrors('file')}" th:errors="*{file}"></p>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Descriptions</label>
-                <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
-                <p class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Product Price</label>
-                <input type="text" class="form-control" th:field="*{price}">
-                <p class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Product Stock</label>
-                <input type="number" class="form-control" th:field="*{stock}">
-                <p class="text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></p>
-            </div>
-
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">ADD</button>
