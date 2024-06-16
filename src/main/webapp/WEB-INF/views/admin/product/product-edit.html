@@ -21,8 +21,16 @@
                 <input type="text" class="form-control" th:field="*{name}">
             </div>
             <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select class="form-select" th:field="*{category.id}">
+                    <option value="">Select Category</option>
+                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                </select>
+
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Product Image</label>
-                <input type="file" class="form-control" th:field="*{image}"><br>
+                <input type="file" class="form-control" th:field="*{file}"><br>
                 <img id="previewUp" src="" alt="" width="100" height="100" style=" object-fit: cover"/>
             </div>
             <div class="mb-3">

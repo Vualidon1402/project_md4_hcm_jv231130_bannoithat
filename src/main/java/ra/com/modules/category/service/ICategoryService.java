@@ -23,4 +23,6 @@ public interface ICategoryService {
     long getTotalsElement();
 
     boolean existByName(String name);
+
+    Category findByIdForProduct(Integer id);
 }

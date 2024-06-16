@@ -13,10 +13,10 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="/css/tiny-slider.css" rel="stylesheet">
-    <!--    <link href="/scss/stylelist.scss" rel="stylesheet">-->
     <link rel="stylesheet" href="/css/style.css">
 
-    <title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+
+    <title>Home page</title>
 </head>
 <body>
 
@@ -44,18 +44,18 @@
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-               <li class="nav-link">
-                   <div class="dropdown">
-                       <img src="/images/user.svg" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                           <li><p class="dropdown-item">Hello: User</p></li>
-                           <li><a class="dropdown-item" href="/login">Login/Register</a></li>
-                           <li><a class="dropdown-item" href="/user-info">User Infomation</a></li>
-                           <li><a class="dropdown-item" href="#">Something else here</a></li>
-                       </ul>
-                   </div>
-               </li>
-<!--                <li><a class="nav-link" href="/login-register"><img src="/images/user.svg"></a></li>-->
+                <li class="nav-link">
+                    <div class="dropdown">
+                        <img src="/images/user.svg" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><p class="dropdown-item" th:if="${session.user != null}">Hello: <span th:text="${session.user.userName}"></span></p></li>
+                            <li><a class="dropdown-item" href="/login">Login/Register</a></li>
+                            <li><a class="dropdown-item" href="/user-info">User Infomation</a></li>
+                            <li th:if="${session.user != null}"><a class="dropdown-item" href="/logout">Log Out</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!--                <li><a class="nav-link" href="/login-register"><img src="/images/user.svg"></a></li>-->
                 <li><a class="nav-link" href="/cart"><img src="/images/cart.svg"></a></li>
             </ul>
         </div>
@@ -94,7 +94,7 @@
 
             <!-- Start Column 1 -->
             <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
-                <h2 class="mb-4 section-title">Crafted with excellent material.</h2>
+                <h2 class="mb-4 section-title">Category Product</h2>
                 <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate
                     velit imperdiet dolor tempor tristique. </p>
                 <p><a href="/shop" class="btn">Explore</a></p>
@@ -102,15 +102,11 @@
             <!-- End Column 1 -->
 
             <!-- Start Column 2 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0" th:each="userPro:${userProduct}">
-                <a class="product-item" href="/cart">
-                    <img  class="img-fluid product-thumbnail" th:src="${userPro.image}">
-                    <h3 class="product-title" th:text="${userPro.name}"></h3>
-                    <strong class="product-price" th:text="${userPro.price}"></strong>
+            <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0" th:each="userCate:${category}">
+                <a class="product-item" th:href="|/shop/category/${userCate.id}|">
+                    <img  class="img-fluid product-thumbnail" th:src="${userCate.image}">
+                    <h3 class="product-title" th:text="${userCate.name}"></h3>
 
-                    <span class="icon-cross">
-								<img src="/images/cross.svg" class="img-fluid">
-							</span>
                 </a>
             </div>
             <!-- End Column 2 -->

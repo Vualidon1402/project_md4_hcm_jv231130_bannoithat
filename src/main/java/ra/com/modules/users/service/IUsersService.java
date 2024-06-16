@@ -16,4 +16,6 @@ public interface IUsersService {
     void deleteById(Integer id);
 
     Users findByUserName(String userName);
+
+    boolean existsByUserName(String userName);
 }

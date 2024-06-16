@@ -22,7 +22,7 @@ public class CategoryDaoImpl implements ICategoryDao {
 //        TypedQuery<Product> query  = session.createQuery("from Product",Product.class);
 //        List<Product> list = query.getResultList();
 //        return list;
-        return session.createQuery("from Product where isDeleted = false ", Category.class).list();
+        return session.createQuery("from Category where isDeleted = false ", Category.class).list();
 //
 //        // su dung Criteria - ko sủ dụng HQL
 //        CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -57,6 +57,12 @@ public class CategoryDaoImpl implements ICategoryDao {
     }
 
     @Override
+    public Category findByIdForProduct(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Category.class, id);
+    }
+
+    @Override
     public boolean existByName(String name) {
         Session session = sessionFactory.getCurrentSession();
         return !session.createQuery("from Category where name like :name")
@@ -73,7 +79,8 @@ public class CategoryDaoImpl implements ICategoryDao {
     public void deleteById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Category category = session.get(Category.class, id);
-        session.delete(category);
+        category.setIsDeleted(true);
+        session.saveOrUpdate(category);
     }
 
     @Override
@@ -82,4 +89,6 @@ public class CategoryDaoImpl implements ICategoryDao {
         return session.createQuery("select count(P) from Category P where isDeleted = false ", Long.class)
                 .getSingleResult();
     }
+
+
 }

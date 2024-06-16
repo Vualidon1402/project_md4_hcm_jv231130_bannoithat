@@ -2,8 +2,12 @@ package ra.com.modules.users;
 
 
 import lombok.*;
+import ra.com.modules.orders.Order;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -12,12 +16,11 @@ import javax.persistence.TemporalType;
 @Data
 @Entity
 @Builder
+@Table(name = "users")
 
 public class Users {
-    public enum userRole {
-        ADMIN,
-        MEMBER
-    }
+
+    private Boolean userRole = false;
 
     public enum userGender{
         Male,
@@ -28,6 +31,14 @@ public class Users {
         ACTIVE,
         INACTIVE
     }
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private userGender userGender;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private userStatus userStatus;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +52,7 @@ public class Users {
     @Size(min = 6, max = 20)
     private String userPassword;
 
-    @NotNull
-    private userRole userRole;
-
-    @Pattern(regexp = "^\\d{10}$")
+    @Pattern(regexp = "^\\d{10}$", message = "Số điện thoại phải gồm 10 số")
     private String userPhone;
 
     @NotEmpty
@@ -54,18 +62,14 @@ public class Users {
     @Email
     private String userEmail;
 
-    @NotNull
-    private userGender userGender;
-
-    @NotNull
-    private userStatus userStatus;
-
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
 }
 

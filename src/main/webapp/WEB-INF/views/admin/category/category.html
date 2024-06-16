@@ -251,26 +251,25 @@
                                          style=" object-fit: cover"></td>
                                 <td th:text="${category.isDeleted}"></td>
                                 <td>
-                                    <button type="button" class="btn btn-warning">Edit</button>
+                                    <a th:href="|/admin/category/edit/${category.id}|" class="btn btn-warning">Edit</a>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
+                                    <a th:href="@{/admin/category/delete/(id=${category.id})}" onclick="return confirm('Bạn có chắc  chắn muốn xóa ko ?')" class="btn btn-danger">Delete</a>                            </tr>
                             </tbody>
 
                         </table>
                     </div>
                     <nav aria-label="Page navigation example ">
                         <ul class="pagination float-end mx-4">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
+                            <li th:class="|page-item ${page<=0?'disabled':''}|">
+                                <a class="page-link" th:href="|?page=${page+-1}&limit=${limit}|">Previous</a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
+                            <li th:each="p,loop:${#numbers.sequence(1,totalPages)}"
+                                th:class="|page-item ${page==loop.index?'active':''}|">
+                                <a class="page-link" th:href="|?page=${loop.index}&limit=${limit}|" th:text="${p}">1</a>
+                            </li>
+                            <li th:class="|page-item ${page+1>=totalPages?'disabled':''}|">
+                                <a class="page-link" th:href="|?page=${page+1}&limit=${limit}|">Next</a>
                             </li>
                         </ul>
                     </nav>

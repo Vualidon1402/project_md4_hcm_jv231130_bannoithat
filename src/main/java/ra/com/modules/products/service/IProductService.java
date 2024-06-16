@@ -15,4 +15,6 @@ public interface IProductService {
     void deleteById(Integer id);
     long getTotalsElement();
     boolean existByName(String name);
+    List<ProductResponse> findByCategory(Integer id);
+
 }

@@ -15,12 +15,6 @@ import javax.validation.constraints.*;
 
 public class UsersResponse {
 
-
-    public enum userRole {
-        ADMIN,
-        USER
-    }
-
     public enum userGender {
         Male,
         Female
@@ -43,7 +37,7 @@ public class UsersResponse {
     private String userPassword;
 
     @NotNull
-    private Users.userRole userRole;
+    private Boolean userRole = false;
 
     @Pattern(regexp = "^\\d{10}$")
     private String userPhone;

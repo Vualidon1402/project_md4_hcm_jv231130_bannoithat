@@ -45,4 +45,13 @@ public class UserDaoImpl implements IUsersDao {
                 .setParameter("userName", userName)
                 .uniqueResult();
     }
+
+    @Override
+    public boolean existsByUserName(String userName) {
+        Session session = sessionFactory.getCurrentSession();
+        Long count = (Long) session.createQuery("select count(u.id) from Users u where u.userName = :userName")
+                .setParameter("userName", userName)
+                .uniqueResult();
+        return count > 0;
+    }
 }

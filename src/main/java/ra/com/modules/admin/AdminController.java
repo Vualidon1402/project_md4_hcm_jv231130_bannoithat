@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import ra.com.modules.category.dto.request.CategoryRequest;
 import ra.com.modules.category.dto.response.CategoryResponse;
 import ra.com.modules.category.service.ICategoryService;
+import ra.com.modules.orders.Order;
+import ra.com.modules.orders.service.IOrderService;
 import ra.com.modules.products.dto.request.ProductRequest;
 import ra.com.modules.products.dto.response.ProductResponse;
 import ra.com.modules.products.service.IProductService;
 import ra.com.modules.products.validator.ProductValidator;
-import ra.com.modules.users.dto.request.UsersRequest;
 import ra.com.modules.users.service.IUsersService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,6 +28,8 @@ public class AdminController {
     private IProductService productService;
     @Autowired
     private ICategoryService categoryService;
+    @Autowired
+    private IOrderService orderService;
 
     @Autowired
     private IUsersService usersService;
@@ -34,7 +38,7 @@ public class AdminController {
     public String admin() {
         return "admin/index"; // tên view
     }
-
+    //phan trang  category
     @GetMapping("/category")
     public String category(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -53,14 +57,10 @@ public class AdminController {
         model.addAttribute("category", new CategoryRequest());
         return "admin/category/category"; // tên view
     }
-
-    @GetMapping("/receipt")
-    public String receipt() {
-        return "admin/receipt";
-    }
-
+    //phan tran product
     @GetMapping("/product")  // prooduct list
-    public String product(@RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "limit", defaultValue = "3") Integer limit, Model model) {
+    public String product(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                          @RequestParam(value = "limit", defaultValue = "3") Integer limit, Model model) {
         // phân trang
         // tổng số trang
         // sô luong sp trên trang
@@ -89,6 +89,7 @@ public class AdminController {
     @GetMapping("/product/add")
     public String add(Model model) {
         model.addAttribute("product", new ProductRequest());
+        model.addAttribute("categories", categoryService.findAll());
         return "admin/product/product-add";
     }
 
@@ -97,6 +98,7 @@ public class AdminController {
 //         validator.validate(request,result);
         if (result.hasErrors()) {
             model.addAttribute("product", request);
+            model.addAttribute("categories", categoryService.findAll());
             return "admin/product/product-add";
         }
         productService.save(request);
@@ -107,6 +109,14 @@ public class AdminController {
     public String doUpdate(@ModelAttribute("product") ProductRequest request) {
         productService.save(request);
         return "redirect:/admin/product"; //điều hướng theo đường dẫn
+    }
+
+    @GetMapping("/product/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        ProductResponse productResponse = productService.findById(id);
+        model.addAttribute("product", productResponse);
+        model.addAttribute("categories", categoryService.findAll());
+        return "admin/product/product-edit";
     }
 
     @GetMapping("/product/delete")
@@ -123,12 +133,7 @@ public class AdminController {
         return "admin/product/product"; // tên view
     }
 
-    @GetMapping("/product/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model) {
-        ProductResponse productResponse = productService.findById(id);
-        model.addAttribute("product", productResponse);
-        return "admin/product/product-edit";
-    }
+
 
     //Category manager
     @GetMapping("/category/add")
@@ -172,6 +177,30 @@ public class AdminController {
         CategoryResponse categoryResponse = categoryService.findById(id);
         model.addAttribute("category", categoryResponse);
         return "admin/category/category-edit";
+    }
+
+    //Order Manager
+    @GetMapping("/order")
+    public String showOrders(Model model) {
+        List<Order> order = orderService.findAll();
+        model.addAttribute("order", order);
+        return "admin/order";
+    }
+
+    @PostMapping("/orders/{id}/status")
+    public String updateOrderStatus(@PathVariable Integer id, @RequestParam Order.OrderStatus status) {
+        Order order = orderService.findById(id);
+        if (order != null) {
+            order.setOrderStatus(status);
+            orderService.save(order);
+        }
+        return "redirect:/admin/orders";
+    }
+
+    @PostMapping("/orders/{id}/delete")
+    public String deleteOrder(@PathVariable Integer id) {
+        orderService.deleteById(id);
+        return "redirect:/admin/orders";
     }
 
 }

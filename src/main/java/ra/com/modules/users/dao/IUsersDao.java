@@ -15,4 +15,6 @@ public interface IUsersDao {
 
     Users findByUserName(String userName);
 
+    boolean existsByUserName(String userName);
+
 }
