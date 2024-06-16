@@ -20,7 +20,7 @@ public class CategoryRequest {
     @NotBlank(message = "Không được để trống")
     @CategoryNameUnique
     private String name;
-
+    private Boolean isDeleted;
     private MultipartFile file;
 
 }

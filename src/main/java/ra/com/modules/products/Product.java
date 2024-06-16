@@ -2,7 +2,6 @@ package ra.com.modules.products;
 
 import lombok.*;
 import ra.com.modules.category.Category;
-import ra.com.modules.nhacungcap.NhaCungCap;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,7 +20,6 @@ import java.util.List;
 // n - n -> 1 - n - Trung gian - n -1
 
 
-
 @Table(name = "Product")
 @Entity // đây là 1 thực thể ánh xạ
 public class Product {
@@ -32,11 +30,11 @@ public class Product {
     private String name;
     private Double price;
     private String description;
-    private String image ;
+    private String image;
     private Integer stock;
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     private Date createdAt;
-    @Column(name = "is_deleted")
+    @Column(name = "isDeleted")
     private Boolean isDeleted;
     // fetch : lấy , load dữ liêu
     // Mặc đinh ManyToOne , và OnetoOne là Eager (load ngay lập tức)
@@ -44,14 +42,7 @@ public class Product {
 
     // cascade : lan truyên hành vi , thao tác trên entity tới scacs thực thể quan hệ với n
     @ManyToOne
-    @JoinColumn(name = "category_id") // chủ thể
+    @JoinColumn(name = "categoryId") // chủ thể
     private Category category;
 
-    @ManyToMany
-    @JoinTable(
-            name = "nhacungcap_product",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "nhacungcap_id")
-    )
-    private List<NhaCungCap> nhaCungCapList;
 }

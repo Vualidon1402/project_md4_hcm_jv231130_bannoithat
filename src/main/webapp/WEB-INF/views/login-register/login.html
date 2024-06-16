@@ -14,16 +14,16 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
-                            <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+                            <h2 class="text-uppercase text-center mb-5">Wellcome to Login</h2>
 
-                            <form th:action="@{/loginForm}" method="post" th:object="${userLogin}">
+                            <form th:action="@{/login}" method="post" th:object="${loginForm}">
 
                                 <div data-mdb-input-init class="form-outline mb-4">
                                     <input type="text" id="form3Example3cg" class="form-control form-control-lg" th:field="*{userName}"/>
                                     <label class="form-label" for="form3Example3cg"
                                     >Your Name</label>
                                     <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="text-danger"></span>
-
+                                    <span th:if="${usernameError}" th:text="${usernameError}" class="text-danger"></span>
                                 </div>
 
                                 <div data-mdb-input-init class="form-outline mb-4">
@@ -31,15 +31,16 @@
                                     <label class="form-label" for="form3Example4cg"
                                     >Password</label>
                                     <span th:if="${#fields.hasErrors('userPassword')}" th:errors="*{userPassword}" class="text-danger"></span>
+                                    <span th:if="${passwordError}" th:text="${passwordError}" class="text-danger"></span>
 
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <button  type="submit" data-mdb-button-init
-                                             data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                                             data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
                                 </div>
 
-                                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                                                                                                        class="fw-bold text-body"><u>Login here</u></a></p>
+                                <p class="text-center text-muted mt-5 mb-0">Do not have an account?<a href="http://localhost:8080/register"
+                                                                                                        class="fw-bold text-body"><u>Register now</u></a></p>
 
                             </form>
 

@@ -1,6 +1,5 @@
 package ra.com.config;
 
-
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -9,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -16,9 +16,9 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
-@Configuration // đây là lớp cấu hình
-@EnableWebMvc // cho phép bật cấu hình MVC
-@ComponentScan(basePackages = "ra.com")// phát hện component :  @Component , @Controller, @Service, @Repository
+@Configuration
+@EnableWebMvc
+@ComponentScan(basePackages = "ra.com")
 public class MVCConfig implements WebMvcConfigurer, ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -27,9 +27,6 @@ public class MVCConfig implements WebMvcConfigurer, ApplicationContextAware {
         this.applicationContext = applicationContext;
     }
 
-    // khởi tạo bean
-    // thymeleaf config
-    // caaus hình thymeleaf
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -53,11 +50,10 @@ public class MVCConfig implements WebMvcConfigurer, ApplicationContextAware {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
-        viewResolver.setContentType("UTF-8");
+        viewResolver.setContentType("text/html; charset=UTF-8");
         return viewResolver;
     }
 
-    // cấu hình file upload
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver getResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -65,15 +61,14 @@ public class MVCConfig implements WebMvcConfigurer, ApplicationContextAware {
         return resolver;
     }
 
-//    cấu hình dường dẫn
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**", "/css/**", "/js/**", "/images/**", "/scss/**")
                 .addResourceLocations("/uploads/", "classpath:assets/css/", "classpath:assets/js/", "classpath:assets/images/", "classpath:assets/scss/");
     }
 
-//Interceptor
-
-
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/admin/**");
+    }
 }

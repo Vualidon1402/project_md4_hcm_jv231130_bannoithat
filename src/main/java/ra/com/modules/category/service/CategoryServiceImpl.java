@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CategoryServiceImpl implements ICategoryService {
-    private static final String uploadFolder = "C:\\Users\\ADMIN\\Desktop\\project_md4_hcm_jv231130_bannoithat\\src\\main\\webapp\\uploads\\";
+    private static final String uploadFolder = "C:\\ProjectModule4\\project_md4_hcm_jv231130_bannoithat\\src\\main\\webapp\\uploads\\";
     @Autowired
     private ICategoryDao categoryDao;
     @Autowired
@@ -93,5 +93,10 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public void deleteById(Integer id) {
         categoryDao.deleteById(id);
+    }
+
+    @Override
+    public Category findByIdForProduct(Integer id) {
+        return categoryDao.findByIdForProduct(id);
     }
 }

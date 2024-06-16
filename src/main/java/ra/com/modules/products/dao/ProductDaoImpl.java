@@ -75,7 +75,8 @@ public class ProductDaoImpl implements IProductDao {
     public void deleteById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Product product = session.get(Product.class,id);
-        session.delete(product);
+        product.setIsDeleted(true);
+        session.saveOrUpdate(product);
     }
 
     @Override
@@ -83,5 +84,13 @@ public class ProductDaoImpl implements IProductDao {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("select count(P) from Product P where isDeleted = false ",Long.class)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<Product> findByCategory(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Product where isDeleted = false and category.id = :id", Product.class)
+                .setParameter("id", id)
+                .list();
     }
 }

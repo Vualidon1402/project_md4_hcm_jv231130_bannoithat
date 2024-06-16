@@ -15,7 +15,7 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/"/>
 
-    <title>Quản lý sản phẩm</title>
+    <title>Quản lý hóa đơn</title>
 
     <link href="/css/app.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -29,7 +29,7 @@
 <body>
 
 <div class="wrapper">
-    <nav th:replace="~{admin/layout/template :: sidebar(viewName='receipt')}"></nav>
+    <nav th:replace="~{admin/layout/template :: sidebar(viewName='order')}"></nav>
     <div class="main">
         <nav class="navbar navbar-expand navbar-light navbar-bg">
             <a class="sidebar-toggle js-sidebar-toggle mx-2">
@@ -224,10 +224,10 @@
                         <h3 class="card-title">Demo Product Table</h3>
                         <nav class="navbar navbar-expand-lg bg-light">
                             <div class="container-fluid">
-                                <a class="navbar-brand" href="/admin/product/add">
-                                    <button type="button" class="btn btn-success">+ Add new Product</button>
-                                </a>
-                                <form class="d-flex" role="search" action="/admin/product/search">
+                                <!--                                <a class="navbar-brand" href="/admin/order/add">-->
+                                <!--                                    <button type="button" class="btn btn-success">Add new Order</button>-->
+                                <!--                                </a>-->
+                                <form class="d-flex" role="search" action="/admin/order/search">
                                     <input class="form-control me-2 fst-italic" type="search"
                                            name="keyword" th:value="${keyword}"
                                            placeholder="Enter product's name... "
@@ -243,30 +243,37 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Image</th>
-                                <th>Price</th>
+                                <th>User ID</th>
                                 <th>Created Date</th>
-                                <th colspan="2">Action</th>
+                                <th>Address</th>
+                                <th>Payment Method</th>
+                                <th>Order Status</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="pro:${products}">
-                                <td th:text="${pro.id}"></td>
-                                <td th:text="${pro.name}"></td>
-                                <td><img th:src="${pro.image}" alt="" width="100" height="100"
-                                         style=" object-fit: cover"></td>
-                                <td th:text="${pro.price}"></td>
-                                <td th:text="${#dates.format(pro.createdAt,'dd/MM/yyyy')}"></td>
-                                <td><a href="" class="btn btn-warning" th:onclick="|handleEditProduct(${pro.id})|"
-                                       data-bs-toggle="modal" data-bs-target="#editModal">Edit</a></td>
-                                <td><a th:href="|/admin/product/delete?id=${pro.id}|"
-                                       onclick="return confirm('Bạn có chắc  chắn muốn xóa ko ?')"
-                                       class="btn btn-danger">Delete</a></td>
+                            <tr th:each="order : ${order}">
+                                <td th:text="${order.id}"></td>
+                                <td th:text="${order.userID}"></td>
+                                <td th:text="${#dates.format(order.createdDate,'dd/MM/yyyy')}"></td>
+                                <td th:text="${order.address}"></td>
+                                <td th:text="${order.paymentMethod}"></td>
+                                <td th:text="${order.orderStatus}"></td>
+                                <td>
+                                    <form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post">
+                                        <select name="status">
+                                            <option th:each="status : ${T(ra.com.modules.orders.Order.OrderStatus).values()}"
+                                                    th:value="${status}" th:text="${status}"
+                                                    th:selected="${status.name() == order.orderStatus.name()}"></option>
+                                        </select>
+                                        <button type="submit">Update Status</button>
+                                    </form>
+                                    <form th:action="@{/admin/orders/{id}/delete(id=${order.id})}" method="post">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
-
                             </tbody>
-
                         </table>
                     </div>
                     <!-- /.card-body -->

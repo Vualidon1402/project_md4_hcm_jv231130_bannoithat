@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 
 public class UsersRequest {
 
+    private Boolean userRole = false;
 
     public enum userGender {
         Male,

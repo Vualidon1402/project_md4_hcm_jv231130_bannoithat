@@ -37,7 +37,6 @@ public class UsersService implements IUsersService{
             user = usersDao.findById(request.getId());
         } else {
             user.setCreatedDate(new Date(System.currentTimeMillis()));
-            user.setUserRole(Users.userRole.MEMBER);
             user.setUserStatus(Users.userStatus.ACTIVE);
         }
         user.setUserName(request.getUserName());
@@ -59,5 +58,10 @@ public class UsersService implements IUsersService{
     @Override
     public Users findByUserName(String userName) {
         return usersDao.findByUserName(userName);
+    }
+
+    @Override
+    public boolean existsByUserName(String userName) {
+        return usersDao.existsByUserName(userName);
     }
 }

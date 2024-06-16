@@ -20,5 +20,7 @@ public interface ICategoryDao {
 
     long getTotalsElement();
 
+    Category findByIdForProduct(Integer id);
+
     boolean existByName(String name);
 }

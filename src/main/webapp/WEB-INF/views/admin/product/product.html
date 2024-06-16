@@ -262,9 +262,9 @@
                                 <td th:text="${pro.price}"></td>
                                 <td th:text="${#dates.format(pro.createdAt,'dd/MM/yyyy')}"></td>
                                 <td><a th:href="|/admin/product/edit/${pro.id}|" class="btn btn-warning">Edit</a></td>
-                                <td><a th:href="|/admin/product/delete/${pro.id}|"
-                                       onclick="return confirm('Bạn có chắc  chắn muốn xóa ko ?')"
-                                       class="btn btn-danger">Delete</a></td>
+                                <td><a  th:href="@{/admin/product/delete/(id=${pro.id})}"
+                                        onclick="return confirm('Bạn có chắc  chắn muốn xóa ko ?')"
+                                        class="btn btn-danger">Delete</a></td>
                             </tr>
 
                             </tbody>

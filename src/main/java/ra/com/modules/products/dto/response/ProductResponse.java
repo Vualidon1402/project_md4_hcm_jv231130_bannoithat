@@ -3,6 +3,8 @@ package ra.com.modules.products.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+import ra.com.modules.category.Category;
 import ra.com.modules.products.Product;
 
 import java.util.Date;
@@ -17,6 +19,10 @@ public class ProductResponse {
     private String image ;
     private Integer stock;
     private Date createdAt;
+    private Boolean isDeleted;
+    private Category category;
+    private MultipartFile file;
+
 
     public ProductResponse(Product product) {
         this.id  = product.getId();
@@ -26,5 +32,7 @@ public class ProductResponse {
         this.description = product.getDescription();
         this.stock = product.getStock();
         this.price = product.getPrice();
+        this.isDeleted = product.getIsDeleted();
+        this.category = product.getCategory();
     }
 }

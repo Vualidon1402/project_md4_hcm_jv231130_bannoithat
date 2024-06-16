@@ -14,4 +14,6 @@ public interface IProductDao {
     void deleteById(Integer id);
     long getTotalsElement();
     boolean existByName(String name);
+
+    List<Product> findByCategory(Integer id);
 }

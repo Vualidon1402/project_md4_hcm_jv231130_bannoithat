@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
+import ra.com.modules.category.Category;
 import ra.com.modules.products.validator.ProductNameUnique;
 
 import javax.validation.constraints.*;
@@ -38,6 +39,6 @@ private Integer id;
     private MultipartFile file;
     @Min(value = 0, message = "không được nhỏ hơn 0")
     private Integer stock;
-    //    @NotNull
-    private Integer categoryId;
+
+    private Category category;
 }
