@@ -9,11 +9,13 @@ import ra.com.modules.category.dto.request.CategoryRequest;
 import ra.com.modules.category.dto.response.CategoryResponse;
 import ra.com.modules.category.service.ICategoryService;
 import ra.com.modules.orders.Order;
+import ra.com.modules.orders.dto.response.OrderResponse;
 import ra.com.modules.orders.service.IOrderService;
 import ra.com.modules.products.dto.request.ProductRequest;
 import ra.com.modules.products.dto.response.ProductResponse;
 import ra.com.modules.products.service.IProductService;
 import ra.com.modules.products.validator.ProductValidator;
+import ra.com.modules.users.Users;
 import ra.com.modules.users.service.IUsersService;
 
 import javax.validation.Valid;
@@ -182,25 +184,35 @@ public class AdminController {
     //Order Manager
     @GetMapping("/order")
     public String showOrders(Model model) {
-        List<Order> order = orderService.findAll();
+        List<OrderResponse> order = orderService.findAll();
         model.addAttribute("order", order);
         return "admin/order";
     }
 
-    @PostMapping("/orders/{id}/status")
-    public String updateOrderStatus(@PathVariable Integer id, @RequestParam Order.OrderStatus status) {
-        Order order = orderService.findById(id);
-        if (order != null) {
-            order.setOrderStatus(status);
-            orderService.save(order);
-        }
-        return "redirect:/admin/orders";
-    }
+//    @PostMapping("/orders/{id}/status")
+//    public String updateOrderStatus(@PathVariable Integer id, @RequestParam Order.OrderStatus status) {
+//        Order order = orderService.findById(id);
+//        if (order != null) {
+//            order.setOrderStatus(status);
+//            orderService.save(order);
+//        }
+//        return "redirect:/admin/orders";
+//    }
 
     @PostMapping("/orders/{id}/delete")
     public String deleteOrder(@PathVariable Integer id) {
         orderService.deleteById(id);
         return "redirect:/admin/orders";
     }
+
+//    @PostMapping("/user/{userName}/lock")
+//public Users lockUser(@PathVariable String userName) {
+//    return usersService.lockUser(userName);
+//}
+//
+//@PostMapping("/user/{userName}/unlock")
+//public Users unlockUser(@PathVariable String userName) {
+//    return usersService.unlockUser(userName);
+//}
 
 }

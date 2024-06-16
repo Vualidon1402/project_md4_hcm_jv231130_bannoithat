@@ -64,4 +64,16 @@ public class UsersService implements IUsersService{
     public boolean existsByUserName(String userName) {
         return usersDao.existsByUserName(userName);
     }
+
+    @Override
+    public Users lockUser(String userName) {
+        return usersDao.lockUser(userName);
+    }
+
+    @Override
+    public Users unlockUser(String userName) {
+        return usersDao.unlockUser(userName);
+    }
+
+
 }

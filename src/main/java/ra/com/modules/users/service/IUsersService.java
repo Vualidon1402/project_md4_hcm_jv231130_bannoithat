@@ -18,4 +18,9 @@ public interface IUsersService {
     Users findByUserName(String userName);
 
     boolean existsByUserName(String userName);
+
+    Users lockUser(String userName);
+
+    Users unlockUser(String userName);
+
 }

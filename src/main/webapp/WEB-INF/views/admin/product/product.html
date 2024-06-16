@@ -249,6 +249,7 @@
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>Price</th>
+                                <th>Stock</th>
                                 <th>Created Date</th>
                                 <th colspan="2">Action</th>
                             </tr>
@@ -260,6 +261,7 @@
                                 <td><img th:src="${pro.image}" alt="" width="100" height="100"
                                          style=" object-fit: cover"></td>
                                 <td th:text="${pro.price}"></td>
+                                <td th:text="${pro.stock}"></td>
                                 <td th:text="${#dates.format(pro.createdAt,'dd/MM/yyyy')}"></td>
                                 <td><a th:href="|/admin/product/edit/${pro.id}|" class="btn btn-warning">Edit</a></td>
                                 <td><a  th:href="@{/admin/product/delete/(id=${pro.id})}"

@@ -7,6 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ra.com.modules.category.service.ICategoryService;
+import ra.com.modules.orderDetail.OrderDetail;
+import ra.com.modules.orderDetail.dto.response.OrderDetailResponse;
+import ra.com.modules.orderDetail.service.IOrderDetailService;
 import ra.com.modules.orders.Order;
 import ra.com.modules.orders.service.IOrderService;
 import ra.com.modules.products.dto.response.ProductResponse;
@@ -15,11 +18,13 @@ import ra.com.modules.users.Users;
 import ra.com.modules.users.dto.request.UsersRequest;
 import ra.com.modules.users.dto.response.UsersResponse;
 import ra.com.modules.users.service.IUsersService;
+import ra.com.modules.users.service.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -35,9 +40,21 @@ public class UserController {
 
     @Autowired
     private IOrderService orderService;
+    @Autowired
+    private IOrderDetailService orderDetailService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "limit", defaultValue = "3") Integer limit,
+            Model model) {
+        long totalElements = categoryService.getTotalsElement();
+        long nguyen = totalElements / limit;
+        long du = totalElements % limit;
+        long totalPages = du == 0 ? nguyen : nguyen + 1;
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("page", page);
+        model.addAttribute("limit", limit);
         model.addAttribute("userProduct", productService.findAll());
         model.addAttribute("category", categoryService.findAll());
         return "index";
@@ -55,9 +72,36 @@ public class UserController {
     }
 
     @GetMapping("/checkout")
-    public String menu() {
+    public String menu(Model model) {
+        // Get all order details
+        List<OrderDetailResponse> allOrderDetails = orderDetailService.findAll();
+
+        // Filter the order details to only include items where isCart is true
+        List<OrderDetailResponse> orderDetails = allOrderDetails.stream()
+                .filter(orderDetail -> orderDetail.getOrder().isCart())
+                .collect(Collectors.toList());
+
+        // Calculate the total price
+        double totalPrice = orderDetailService.calculateTotalPrice(orderDetails);
+
+        // Add the filtered order details and total price to the model
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("order", orderDetails);
+
         return "checkout";
     }
+
+@PostMapping("/checkout")
+public String checkout(HttpSession session) {
+    // Lấy người dùng từ session
+    Users user = (Users) session.getAttribute("user");
+    // Lấy đơn hàng hiện tại của người dùng
+    Order currentOrder = user.getOrders().get(user.getOrders().size() - 1);
+    // Thực hiện checkout
+    orderService.checkout(currentOrder);
+
+    return "redirect:/thank-you";
+}
 
     @GetMapping("/services")
     public String service() {
@@ -156,22 +200,35 @@ public String doLogin(@ModelAttribute("loginForm") UsersResponse response, HttpS
     //Order
     @PostMapping("/cart/add")
     public String addProductToOrder(@RequestParam Integer productId, @RequestParam Integer quantity, HttpSession session) {
-        Order order = (Order) session.getAttribute("order");
-        if (order == null) {
-            order = new Order();
-            session.setAttribute("order", order);
-        }
-        orderService.addProductToOrder(productId, order);
+        // Get the user from the session
+        Users user = (Users) session.getAttribute("user");
+        // Add the product to the order
+        orderService.save(user.getId(), productId, quantity, false);
         return "redirect:/cart";
     }
 
     @GetMapping("/cart")
-    public String showCart(Model model, HttpSession session) {
-        Order order = (Order) session.getAttribute("order");
-        if (order != null) {
-            model.addAttribute("order", order);
-        }
+    public String showCart(Model model) {
+        List<OrderDetailResponse> allOrderDetails = orderDetailService.findAll();
+
+        // Filter the order details to only include items where isCart is true
+        List<OrderDetailResponse> orderDetails = allOrderDetails.stream()
+                .filter(orderDetail -> orderDetail.getOrder().isCart())
+                .collect(Collectors.toList());
+
+        // Calculate the total price
+        double totalPrice = orderDetailService.calculateTotalPrice(orderDetails);
+
+        // Add the filtered order details and total price to the model
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("order", orderDetails);
         return "/cart";
+    }
+
+    @GetMapping("/cart/delete")
+    public String deleteOrderDetail(@RequestParam("id") Integer idDel) {
+        orderDetailService.deleteById(idDel);
+        return "redirect:/cart";
     }
 
 }
