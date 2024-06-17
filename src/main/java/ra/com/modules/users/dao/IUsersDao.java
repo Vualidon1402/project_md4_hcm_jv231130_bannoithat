@@ -17,4 +17,8 @@ public interface IUsersDao {
 
     boolean existsByUserName(String userName);
 
+    Users lockUser(String userName);
+
+    Users unlockUser(String userName);
+
 }

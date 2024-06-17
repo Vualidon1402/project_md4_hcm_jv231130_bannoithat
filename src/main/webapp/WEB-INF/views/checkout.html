@@ -14,7 +14,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="/css/tiny-slider.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+    <title>Check out</title>
 </head>
 <body>
 <!-- Start Header/Navigation -->
@@ -82,34 +82,21 @@
                 <div class="p-3 p-lg-5 border bg-white">
                     <div class="form-group">
                         <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
-                        <select id="c_country" class="form-control">
-                            <option value="1">Select a country</option>
-                            <option value="2">bangladesh</option>
-                            <option value="3">Algeria</option>
-                            <option value="4">Afghanistan</option>
-                            <option value="5">Ghana</option>
-                            <option value="6">Albania</option>
-                            <option value="7">Bahrain</option>
-                            <option value="8">Colombia</option>
-                            <option value="9">Dominican Republic</option>
-                        </select>
+                        <input type="text" id="c_country" class="form-control" placeholder="Enter Country">
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-6">
-                            <label for="c_fname" class="text-black">First Name <span
+                        <div class="col-md-12">
+                            <label for="c_fname" class="text-black">Full Name <span
                                     class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="c_fname" name="c_fname">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="c_lname" name="c_lname">
+                            <input type="text" class="form-control" id="c_fname" name="c_fname" placeholder="Name">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <label for="c_companyname" class="text-black">Company Name </label>
-                            <input type="text" class="form-control" id="c_companyname" name="c_companyname">
+                            <label for="c_companyname" class="text-black">Phone Number </label>
+                            <input type="text" class="form-control" id="c_companyname" name="c_companyname"
+                                   placeholder="Phone Number">
                         </div>
                     </div>
 
@@ -117,36 +104,15 @@
                         <div class="col-md-12">
                             <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="c_address" name="c_address"
-                                   placeholder="Street address">
+                                   placeholder=" Address">
                         </div>
                     </div>
-
-                    <div class="form-group mt-3">
-                        <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <label for="c_state_country" class="text-black">State / Country <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="c_state_country" name="c_state_country">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="c_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
-                        </div>
-                    </div>
-
                     <div class="form-group row mb-5">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label for="c_email_address" class="text-black">Email Address <span
                                     class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="c_email_address" name="c_email_address">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="c_phone" name="c_phone"
-                                   placeholder="Phone Number">
+                            <input type="text" class="form-control" id="c_email_address" name="c_email_address"
+                                   placeholder="Email">
                         </div>
                     </div>
 
@@ -300,24 +266,22 @@
                             <table class="table site-block-order-table mb-5">
                                 <thead>
                                 <th>Product</th>
+                                <th>Quantity</th>
                                 <th>Total</th>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td>
-                                    <td>$250.00</td>
+                                <tr th:each="orderDetail : ${order}">
+                                    <td th:text="${orderDetail.product.name}"></td>
+                                    <td th:text="${orderDetail.quantity}"></td>
+                                    <td th:text="${#numbers.formatDecimal(orderDetail.price * orderDetail.quantity, 0, 'COMMA', 2, 'POINT')}"></td>
                                 </tr>
-                                <tr>
-                                    <td>Polo Shirt <strong class="mx-2">x</strong> 1</td>
-                                    <td>$100.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                                    <td class="text-black">$350.00</td>
-                                </tr>
+
                                 <tr>
                                     <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                                    <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
+                                    <td class="text-black font-weight-bold"></td>
+                                    <td class="text-black font-weight-bold"><strong
+                                            th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 2, 'POINT')}"></strong>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -365,10 +329,17 @@
                             </div>
 
                             <div class="form-group">
-                                <button class="btn btn-black btn-lg py-3 btn-block"
-                                        onclick="window.location='/thank-you'">Place Order
-                                </button>
+                                <form action="/checkout" method="post" onsubmit="return confirmOrder()">
+                                    <button type="submit" class="btn btn-black btn-lg py-3 btn-block">Place Order
+                                    </button>
+                                </form>
                             </div>
+
+                            <script>
+                                function confirmOrder() {
+                                    return confirm('Bạn có chắc chắn muốn đặt hàng không?');
+                                }
+                            </script>
 
                         </div>
                     </div>
@@ -384,7 +355,15 @@
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <!-- End Footer Section -->
 
-
+<script>
+    function confirmOrder() {
+        if (confirm('Bạn có chắc chắn muốn đặt hàng không?')) {
+            window.location = '/thank-you';
+        } else {
+            return false;
+        }
+    }
+</script>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/tiny-slider.js"></script>
 <script src="/js/custom.js"></script>

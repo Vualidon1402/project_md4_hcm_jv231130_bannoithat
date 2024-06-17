@@ -54,4 +54,32 @@ public class UserDaoImpl implements IUsersDao {
                 .uniqueResult();
         return count > 0;
     }
+
+  @Override
+public Users lockUser(String userName) {
+    Session session = sessionFactory.getCurrentSession();
+    Users user = session.createQuery("from Users where userName = :userName", Users.class)
+            .setParameter("userName", userName)
+            .uniqueResult();
+
+    if (user != null) {
+        user.setUserStatus(Users.userStatus.INACTIVE); // Lock the user
+        session.saveOrUpdate(user);
+    }
+    return user;
+}
+
+@Override
+public Users unlockUser(String userName) {
+    Session session = sessionFactory.getCurrentSession();
+    Users user = session.createQuery("from Users where userName = :userName", Users.class)
+            .setParameter("userName", userName)
+            .uniqueResult();
+
+    if (user != null) {
+        user.setUserStatus(Users.userStatus.ACTIVE); // Unlock the user
+        session.saveOrUpdate(user);
+    }
+    return user;
+}
 }

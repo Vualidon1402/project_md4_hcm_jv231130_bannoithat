@@ -109,6 +109,20 @@
 
                 </a>
             </div>
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination float-end mx-4">
+                    <li th:class="|page-item ${page<=0?'disabled':''}|">
+                        <a class="page-link" th:href="|?page=${page+-1}&limit=${limit}|">Previous</a>
+                    </li>
+                    <li th:each="p,loop:${#numbers.sequence(1,totalPages)}"
+                        th:class="|page-item ${page==loop.index?'active':''}|">
+                        <a class="page-link" th:href="|?page=${loop.index}&limit=${limit}|" th:text="${p}">1</a>
+                    </li>
+                    <li th:class="|page-item ${page+1>=totalPages?'disabled':''}|">
+                        <a class="page-link" th:href="|?page=${page+1}&limit=${limit}|">Next</a>
+                    </li>
+                </ul>
+            </nav>
             <!-- End Column 2 -->
 
 

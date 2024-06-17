@@ -43,12 +43,15 @@ public class Order {
     @JoinColumn(name = "userId")
     private Users user;
 
+    private boolean isCart;
+
     public enum OrderStatus {
         PENDING,
         CONFIRM,
         SHIPPING,
         DELIVERY,
-        CANCEL
+        CANCEL,
+        SHOPPING
     }
 
 }

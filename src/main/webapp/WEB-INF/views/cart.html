@@ -14,7 +14,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="/css/tiny-slider.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+    <title>Cart</title>
 </head>
 <body>
 <!-- Start Header/Navigation -->
@@ -85,58 +85,30 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="orderDetail : ${order}">
                             <td class="product-thumbnail">
-                                <img src="/images/product-1.png" alt="Image" class="img-fluid">
+                                <img th:src="${orderDetail.product.image}" alt="Image" class="img-fluid">
                             </td>
                             <td class="product-name">
-                                <h2 class="h5 text-black">Product 1</h2>
+                                <h2 class="h5 text-black" th:text="${orderDetail.product.name}">Product Name</h2>
                             </td>
-                            <td>$49.00</td>
+                            <td th:text="${orderDetail.price}"></td>
                             <td>
                                 <div class="input-group mb-3 d-flex align-items-center quantity-container"
                                      style="max-width: 120px;">
                                     <div class="input-group-prepend">
                                         <button class="btn btn-outline-black decrease" type="button">&minus;</button>
                                     </div>
-                                    <input type="text" class="form-control text-center quantity-amount" value="1"
-                                           placeholder="" aria-label="Example text with button addon"
-                                           aria-describedby="button-addon1">
+                                    <input type="text" class="form-control text-center quantity-amount "
+                                           th:value="${orderDetail.quantity}" placeholder=""
+                                           aria-label="Example text with button addon">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-black increase" type="button">&plus;</button>
                                     </div>
                                 </div>
-
                             </td>
-                            <td>$49.00</td>
-                            <td><a href="#" class="btn btn-black btn-sm">X</a></td>
-                        </tr>
-
-                        <tr>
-                            <td class="product-thumbnail">
-                                <img src="/images/product-2.png" alt="Image" class="img-fluid">
-                            </td>
-                            <td class="product-name">
-                                <h2 class="h5 text-black">Product 2</h2>
-                            </td>
-                            <td>$49.00</td>
-                            <td>
-                                <div class="input-group mb-3 d-flex align-items-center quantity-container"
-                                     style="max-width: 120px;">
-                                    <div class="input-group-prepend">
-                                        <button class="btn btn-outline-black decrease" type="button">&minus;</button>
-                                    </div>
-                                    <input type="text" class="form-control text-center quantity-amount" value="1"
-                                           placeholder="" aria-label="Example text with button addon"
-                                           aria-describedby="button-addon1">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-black increase" type="button">&plus;</button>
-                                    </div>
-                                </div>
-
-                            </td>
-                            <td>$49.00</td>
-                            <td><a href="#" class="btn btn-black btn-sm">X</a></td>
+                            <td th:text="${#numbers.formatDecimal(orderDetail.price * orderDetail.quantity, 0, 'COMMA', 2, 'POINT')}"></td>
+                            <td><a th:href="@{/cart/delete(id=${orderDetail.id})}" class="btn btn-black btn-sm" onclick="return confirm('Are you sure to delete this item?')">X</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -148,10 +120,12 @@
             <div class="col-md-6">
                 <div class="row mb-5">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <button class="btn btn-black btn-sm btn-block">Update Cart</button>
+
                     </div>
                     <div class="col-md-6">
-                        <button class="btn btn-outline-black btn-sm btn-block">Continue Shopping</button>
+                        <button class="btn btn-outline-black btn-sm btn-block" onclick="window.location='/shop'">
+                            Continue Shopping
+                        </button>
                     </div>
                 </div>
                 <div class="row">
@@ -177,10 +151,10 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <span class="text-black">Subtotal</span>
+
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black">$230.00</strong>
+
                             </div>
                         </div>
                         <div class="row mb-5">
@@ -188,7 +162,7 @@
                                 <span class="text-black">Total</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black">$230.00</strong>
+                                <strong class="text-black" th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 2, 'POINT')}"></strong>
                             </div>
                         </div>
 

@@ -16,7 +16,7 @@ public class OrderDaoImpl implements IOrderDao {
     @Override
     public List<Order> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Order", Order.class).list();
+        return session.createQuery("from Order where isCart = true", Order.class).list();
     }
 
     @Override
@@ -43,5 +43,7 @@ public class OrderDaoImpl implements IOrderDao {
         Session session = sessionFactory.getCurrentSession();
         session.update(order);
     }
+
+
 
 }
