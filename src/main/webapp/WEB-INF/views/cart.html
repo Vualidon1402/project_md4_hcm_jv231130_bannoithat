@@ -41,7 +41,17 @@
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                <li><a class="nav-link" href="/login-register"><img src="/images/user.svg"></a></li>
+                <li class="nav-link">
+                    <div class="dropdown">
+                        <img src="/images/user.svg" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><p class="dropdown-item" th:if="${session.user != null}">Hello: <span th:text="${session.user.userName}"></span></p></li>
+                            <li><a class="dropdown-item" href="/login">Login/Register</a></li>
+                            <li><a class="dropdown-item" href="/user-info">User Infomation</a></li>
+                            <li th:if="${session.user != null}"><a class="dropdown-item" href="/logout">Log Out</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a class="nav-link" href="/cart"><img src="/images/cart.svg"></a></li>
             </ul>
         </div>
@@ -189,5 +199,6 @@
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/tiny-slider.js"></script>
 <script src="/js/custom.js"></script>
+
 </body>
 </html>

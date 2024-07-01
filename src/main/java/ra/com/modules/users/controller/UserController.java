@@ -140,9 +140,11 @@ public String checkout(HttpSession session) {
     }
 
     @GetMapping("/user-info")
-    public String userInfo() {
-        return "user-info";
-    }
+public String userInfo(Model model, HttpSession session) {
+    Users currentUser = (Users) session.getAttribute("user");
+    model.addAttribute("user", currentUser);
+    return "user-info";
+}
 
     @GetMapping("/order-history")
     public String orderHistory() {

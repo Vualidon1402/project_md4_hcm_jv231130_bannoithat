@@ -21,4 +21,12 @@ public interface IUsersDao {
 
     Users unlockUser(String userName);
 
+    long getTotalsElement();
+
+    List<Users> findByPagination(Integer page ,Integer size);
+
+    List<Users> searchByName(String keyword);
+
+    void update(Users users);
+
 }

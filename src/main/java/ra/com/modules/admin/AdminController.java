@@ -81,11 +81,29 @@ public class AdminController {
         return "admin/product/product"; // tên view
     }
 
-    @GetMapping("user")
-    public String user(Model model){
-        model.addAttribute("adminUser",usersService.findAll());
+    @GetMapping("/user")
+    public String user(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "limit", defaultValue = "3") Integer limit,
+            Model model){
+        long totalElements = usersService.getTotalsElement();
+        long nguyen = totalElements / limit;
+        long du = totalElements % limit;
+        long totalPages = du == 0 ? nguyen : nguyen + 1;
+        model.addAttribute("users", usersService.findByPagination(page, limit));
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("page", page);
+        model.addAttribute("limit", limit);
+        model.addAttribute("user", new Users());
         return "admin/user";
     }
+
+  @GetMapping("/user/search")
+public String searchUser(@RequestParam("keyword") String keyword, Model model) {
+    model.addAttribute("adminUser", usersService.searchByName(keyword));
+    model.addAttribute("keyword", keyword);
+    return "admin/user"; // tên view
+}
 
     // product mananger
     @GetMapping("/product/add")
