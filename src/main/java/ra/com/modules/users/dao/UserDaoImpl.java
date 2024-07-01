@@ -55,31 +55,60 @@ public class UserDaoImpl implements IUsersDao {
         return count > 0;
     }
 
-  @Override
-public Users lockUser(String userName) {
-    Session session = sessionFactory.getCurrentSession();
-    Users user = session.createQuery("from Users where userName = :userName", Users.class)
-            .setParameter("userName", userName)
-            .uniqueResult();
+    @Override
+    public Users lockUser(String userName) {
+        Session session = sessionFactory.getCurrentSession();
+        Users user = session.createQuery("from Users where userName = :userName", Users.class)
+                .setParameter("userName", userName)
+                .uniqueResult();
 
-    if (user != null) {
-        user.setUserStatus(Users.userStatus.INACTIVE); // Lock the user
-        session.saveOrUpdate(user);
+        if (user != null) {
+            user.setUserStatus(Users.userStatus.INACTIVE); // Lock the user
+            session.saveOrUpdate(user);
+        }
+        return user;
     }
-    return user;
-}
 
-@Override
-public Users unlockUser(String userName) {
-    Session session = sessionFactory.getCurrentSession();
-    Users user = session.createQuery("from Users where userName = :userName", Users.class)
-            .setParameter("userName", userName)
-            .uniqueResult();
+    @Override
+    public Users unlockUser(String userName) {
+        Session session = sessionFactory.getCurrentSession();
+        Users user = session.createQuery("from Users where userName = :userName", Users.class)
+                .setParameter("userName", userName)
+                .uniqueResult();
 
-    if (user != null) {
-        user.setUserStatus(Users.userStatus.ACTIVE); // Unlock the user
-        session.saveOrUpdate(user);
+        if (user != null) {
+            user.setUserStatus(Users.userStatus.ACTIVE); // Unlock the user
+            session.saveOrUpdate(user);
+        }
+        return user;
     }
-    return user;
-}
+
+    @Override
+    public long getTotalsElement() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select count(u) from Users u", Long.class)
+                .uniqueResult();
+    }
+
+    @Override
+    public List<Users> findByPagination(Integer page, Integer size) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Users", Users.class)
+                .setMaxResults(size)
+                .setFirstResult(page * size)
+                .list();
+    }
+
+    @Override
+    public List<Users> searchByName(String keyword) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Users u where u.userName like concat('%',:key,'%')", Users.class)
+                .setParameter("key", keyword)
+                .list();
+    }
+    @Override
+    public void update(Users users) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(users);
+    }
 }

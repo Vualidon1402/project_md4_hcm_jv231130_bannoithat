@@ -93,4 +93,7 @@ public class ProductDaoImpl implements IProductDao {
                 .setParameter("id", id)
                 .list();
     }
+
+
+
 }
